@@ -18,19 +18,17 @@
     <?php endif; ?>
 
     <form action="/QuizApp/register" method="POST">
-    <input type="text" name="full_name" placeholder="Full Name" required>
-    <input type="text" name="username" placeholder="Username" required>
-    <select name="gender" required>
-        <option value="">Select Gender</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-    </select>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <button type="submit">Sign Up</button>
+        <input type="text" name="full_name" placeholder="Full Name" required>
+        <input type="text" name="username" placeholder="Username" required>
+        <select name="gender" required>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Sign Up</button>
 	</form>
-
-
 </div>
 </body>
 </html>
