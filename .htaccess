@@ -6,4 +6,4 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 # Redirect everything to index.php with a GET parameter 'path'
-RewriteRule ^(.*)$ index.php?path=$1 [L,QSA]
+RewriteRule ^(.*)$ index.php?path=$1 [QSA,l]
