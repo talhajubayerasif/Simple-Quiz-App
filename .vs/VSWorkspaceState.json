@@ -6,8 +6,9 @@
     "\\config",
     "\\controllers",
     "\\models",
-    "\\views"
+    "\\views",
+    "\\views\\errors"
   ],
-  "SelectedNode": "\\views\\register.php",
+  "SelectedNode": "\\views\\home.php",
   "PreviewInSolutionExplorer": false
 }

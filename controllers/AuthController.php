@@ -97,6 +97,47 @@ class AuthController {
         }
     }
 
+    // Show change password form & handle POST
+    public function changePassword() {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        // Ensure user is logged in
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: /QuizApp/login");
+            exit();
+        }
+
+        $error = null;
+        $success = null;
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $currentPassword = $_POST['current_password'] ?? '';
+        $newPassword     = $_POST['new_password'] ?? '';
+        $confirmPassword = $_POST['confirm_password'] ?? '';
+
+        if (empty($currentPassword) || empty($newPassword) || empty($confirmPassword)) {
+            $error = "All fields are required!";
+        } elseif ($newPassword !== $confirmPassword) {
+            $error = "New password and confirmation do not match!";
+        } else {
+            // Get user from DB
+            $user = $this->userModel->findByUsernameOrEmail($_SESSION['username']);
+
+            if ($user && password_verify($currentPassword, $user['password'])) {
+                // Hash new password
+                $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                $this->userModel->updatePassword($user['id'], $hashedPassword);
+
+                $success = "Password updated successfully!";
+            } else {
+                $error = "Current password is incorrect!";
+            }
+        }
+    }
+
+    require __DIR__ . '/../views/changepassword.php';
+}
+
     // Logout user
     public function logout() {
         if (session_status() === PHP_SESSION_NONE) session_start();
@@ -106,4 +147,3 @@ class AuthController {
         exit();
     }
 }
-
