@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\assets",
+    "\\assets\\css",
+    "\\config",
+    "\\controllers",
+    "\\models",
+    "\\views",
+    "\\views\\errors"
+  ],
+  "SelectedNode": "\\views\\home.php",
+  "PreviewInSolutionExplorer": false
+}

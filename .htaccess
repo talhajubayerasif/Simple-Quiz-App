@@ -1,0 +1,11 @@
+
+RewriteEngine On
+RewriteBase /QuizApp/
+
+# If the file or folder exists, serve it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirect everything to index.php with a GET parameter 'path'
+RewriteRule ^(.*)$ index.php?path=$1 [QSA,l]
+
