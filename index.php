@@ -1,3 +1,4 @@
+
 <?php
 try {
     // Get action from query parameter set by .htaccess
@@ -87,3 +88,4 @@ try {
     error_log("MVC Error: " . $e->getMessage());
     include __DIR__ . '/views/errors/500.php';
 }
+

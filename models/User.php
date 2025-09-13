@@ -1,5 +1,16 @@
 <?php
 class User {
+
+    private $db;
+    public function __construct() {
+        $this->db = Database::getInstance()->getConnection();
+    }
+
+    public function findById($id) {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE user_id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
     private $conn;
 
     public function __construct($db){
@@ -67,6 +78,7 @@ class User {
         $stmt->execute();
 
         return $stmt->get_result()->fetch_assoc();
+
     }
 
     //Update password

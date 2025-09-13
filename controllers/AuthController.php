@@ -1,8 +1,16 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../models/User.php';
-
 class AuthController {
+
+    public function login() {
+        include 'views/auth/login.php';
+    }
+    public function register() {
+        include 'views/auth/register.php';
+    }
+    public function logout() {
+        session_destroy();
+        header("Location: /QuizApp/login");
+
     private $db;
     private $userModel;
 
@@ -95,6 +103,7 @@ class AuthController {
             // GET request: show login form
             require __DIR__ . '/../views/login.php';
         }
+
     }
 
     // Show change password form & handle POST
