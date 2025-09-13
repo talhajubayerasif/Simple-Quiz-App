@@ -16,7 +16,7 @@ $role = $_SESSION['user_type']; // admin, quizauthor, or student
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - Quiz App</title>
+    <title>Dashboard</title>
     <style>
         /* ===== Global ===== */
         body {
@@ -98,7 +98,7 @@ $role = $_SESSION['user_type']; // admin, quizauthor, or student
 <body>
     <div class="container">
         <header>
-            <h1>Welcome, <?php echo htmlspecialchars($username); ?> 👋</h1>
+            <h1>Welcome, <?php echo htmlspecialchars($username); ?> ðŸ‘‹</h1>
             <p>Role: <strong><?php echo ucfirst($role); ?></strong></p>
         </header>
 
@@ -113,7 +113,7 @@ $role = $_SESSION['user_type']; // admin, quizauthor, or student
 
         <!-- Role-Specific Features -->
 <div class="card">
-    <h2>Role-Specific Features</h2>
+    <h2>Specific Features</h2>
     <div class="features">
         <?php if ($role === 'admin'): ?>
             <div class="feature"><a href="/QuizApp/manage-users">Manage Users<br><small>Approve, block, or delete user accounts</small></a></div>

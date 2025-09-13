@@ -38,7 +38,6 @@
     <div class="container">
         <h1>Welcome to Quiz App</h1>
         <p>Get started by signing up or logging in.</p>
-        <!-- Correct links for your routing -->
         <a href="/QuizApp/register">Sign Up</a>
         <a href="/QuizApp/login">Login</a>
     </div>

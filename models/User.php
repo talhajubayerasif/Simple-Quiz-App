@@ -2,29 +2,85 @@
 class User {
     private $conn;
 
-    public function __construct($db) {
+    public function __construct($db){
         $this->conn = $db;
     }
 
-    public function create($id, $fullName, $username, $gender, $email, $password) {
-        $query = "INSERT INTO users (id, full_name, username, gender, email, password) 
-                  VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = $this->conn->prepare($query);
-
-        if ($stmt === false) {
-            die("Prepare failed: " . $this->conn->error);
+    // Create new user
+    public function create($fullName, $username, $gender, $email, $password, $user_type = 'student'){
+        $sql = "INSERT INTO users (full_name, username, gender, email, password, user_type) 
+                VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            throw new Exception("Prepare failed: " . $this->conn->error);
         }
 
-        $stmt->bind_param("ssssss", $id, $fullName, $username, $gender, $email, $password);
-        return $stmt->execute();
+        $stmt->bind_param("ssssss", $fullName, $username, $gender, $email, $password, $user_type);
+        if (!$stmt->execute()) {
+            throw new Exception("Execute failed: " . $stmt->error);
+        }
+
+        return true;
     }
 
-    public function findByUsernameOrEmail($usernameOrEmail) {
-        $query = "SELECT * FROM users WHERE username = ? OR email = ? LIMIT 1";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("ss", $usernameOrEmail, $usernameOrEmail);
+    // Get all users
+    public function getAll() {
+        $sql = "SELECT id, full_name, username, email, gender, user_type FROM users";
+        $result = $this->conn->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Get user by ID
+    public function getById($id) {
+        $sql = "SELECT * FROM users WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $id);
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
+
+    // Update user
+    public function update($id, $fullName, $username, $gender, $email, $user_type) {
+        $sql = "UPDATE users SET full_name=?, username=?, gender=?, email=?, user_type=? WHERE id=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("sssssi", $fullName, $username, $gender, $email, $user_type, $id);
+        return $stmt->execute();
+    }
+
+    // Delete user
+    public function delete($id) {
+        $sql = "DELETE FROM users WHERE id=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
+
+    // Find user by username OR email
+    public function findByUsernameOrEmail($identifier){
+        $sql = "SELECT * FROM users WHERE username = ? OR email = ? LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            throw new Exception("Prepare failed: " . $this->conn->error);
+        }
+
+        $stmt->bind_param("ss", $identifier, $identifier);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_assoc();
+    }
+
+    //Update password
+    public function updatePassword($userId, $newPassword){
+        $sql = "UPDATE users SET password = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            throw new Exception("Prepare failed: " . $this->conn->error);
+        }
+
+        $stmt->bind_param("si", $newPassword, $userId);
+        if (!$stmt->execute()) {
+            throw new Exception("Execute failed: " . $stmt->error);
+        }
+        return true;
+    }
 }
-?>
